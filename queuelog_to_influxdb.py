@@ -21,18 +21,21 @@ class QueueLogLine:
 	data4: None 
 
 def parse_args():
-	parser = argparse.ArgumentParser(description='Send queue_log events to influxdb.')
+	parser = argparse.ArgumentParser(description='Monitor Asterisk queue_log and send events to influxdb.')
 	parser.add_argument('--config', dest='config_file', action='store',
 						default='config.ini',
 						help='config file name (default: config.ini)')
 	parser.add_argument('--file', dest='log_file', action='store',
 						default=None,
 						help='log file to read from (default: /var/log/asterisk/queue_log)')
+	parser.add_argument('--one-shot', dest='one_shot', action='store_true',
+						help="Just import the file and don't wait for new lines")
 	args = parser.parse_args()
 
 	_config.current_config["config_file"] = args.config_file
 	_config.current_config["log_file"] = args.log_file
-
+	_config.current_config["one_shot"] = args.one_shot
+	
 def parse_line(line):
 	tokens = line.split("|")
 	parsed = QueueLogLine()
@@ -68,6 +71,6 @@ if __name__ == "__main__":
 	_config.read_config()
 
 	_influx.select_db()
-	while True:
+	while not _config.current_config["one_shot"]:
 		process_input()
 		time.sleep(0.5)
