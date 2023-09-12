@@ -78,78 +78,68 @@ def line_to_influx(parsed):
         }
     }
 
-    match parsed.action:
-        case 'ABANDON':
-            record['fields']['exit_position'] = int(parsed.data1)
-            record['fields']['enter_position'] = int(parsed.data2)
-            record['fields']['wait_time'] = int(parsed.data3)
-            pass
-        case 'ADDMEMBER':
-            pass
-        case 'AGENTDUMP':
-            pass
-        case 'AGENTLOGIN':
-            pass
-        case 'AGENTLOGOFF':
-            pass
-        case 'COMPLETEAGENT':
-            record['fields']['wait_time'] = int(parsed.data1)
-            record['fields']['call_length'] = int(parsed.data2)
-            record['fields']['enter_position'] = int(parsed.data3)
-            pass
-        case 'COMPLETECALLER':
-            record['fields']['wait_time'] = int(parsed.data1)
-            record['fields']['call_length'] = int(parsed.data2)
-            record['fields']['enter_position'] = int(parsed.data3)
-            pass
-        case 'CONFIGRELOAD':
-            pass
-        case 'CONNECT':
-            record['fields']['wait_time'] = int(parsed.data1)
-            record['fields']['ring_time'] = int(parsed.data3)
-            pass
-        case 'ENTERQUEUE':
-            record['fields']['url'] = parsed.data1
-            record['fields']['callerid'] = parsed.data2
-            pass
-        case 'EXITEMPTY':
-            record['fields']['exit_position'] = int(parsed.data1)
-            record['fields']['enter_position'] = int(parsed.data2)
-            record['fields']['wait_time'] = int(parsed.data3)
-            pass
-        case 'EXITWITHKEY':
-            record['fields']['exit_key'] = parsed.data2
-            record['fields']['exit_position'] = int(parsed.data2)
-            record['fields']['enter_position'] = int(parsed.data3)
-            record['fields']['wait_time'] = int(parsed.data4)
-            pass
-        case 'EXITWITHTIMEOUT':
-            record['fields']['exit_position'] = int(parsed.data1)
-            record['fields']['enter_position'] = int(parsed.data2)
-            record['fields']['wait_time'] = int(parsed.data3)
-            pass
-        case 'PAUSE':
-            pass
-        case 'PAUSEALL':
-            pass
-        case 'UNPAUSE':
-            pass
-        case 'UNPAUSEALL':
-            pass
-        case 'PENALTY':
-            pass
-        case 'REMOVEMEMBER':
-            pass
-        case 'RINGNOANSWER':
-            pass
-        case 'TRANSFER':
-            record['fields']['transfer_extension'] = parsed.data1
-            record['fields']['wait_time'] = int(parsed.data2)
-            record['fields']['call_length'] = int(parsed.data3)
-            record['fields']['enter_position'] = int(parsed.data4)
-            pass
-        case 'SYSCOMPAT':
-            pass
+    if parsed.action == 'ABANDON':
+        record['fields']['exit_position'] = int(parsed.data1)
+        record['fields']['enter_position'] = int(parsed.data2)
+        record['fields']['wait_time'] = int(parsed.data3)
+    elif parsed.action == 'ADDMEMBER':
+        pass
+    elif parsed.action == 'AGENTDUMP':
+        pass
+    elif parsed.action == 'AGENTLOGIN':
+        pass
+    elif parsed.action == 'AGENTLOGOFF':
+        pass
+    elif parsed.action == 'COMPLETEAGENT':
+        record['fields']['wait_time'] = int(parsed.data1)
+        record['fields']['call_length'] = int(parsed.data2)
+        record['fields']['enter_position'] = int(parsed.data3)
+    elif parsed.action == 'COMPLETECALLER':
+        record['fields']['wait_time'] = int(parsed.data1)
+        record['fields']['call_length'] = int(parsed.data2)
+        record['fields']['enter_position'] = int(parsed.data3)
+    elif parsed.action == 'CONFIGRELOAD':
+        pass
+    elif parsed.action == 'CONNECT':
+        record['fields']['wait_time'] = int(parsed.data1)
+        record['fields']['ring_time'] = int(parsed.data3)
+    elif parsed.action == 'ENTERQUEUE':
+        record['fields']['url'] = parsed.data1
+        record['fields']['callerid'] = parsed.data2
+    elif parsed.action == 'EXITEMPTY':
+        record['fields']['exit_position'] = int(parsed.data1)
+        record['fields']['enter_position'] = int(parsed.data2)
+        record['fields']['wait_time'] = int(parsed.data3)
+    elif parsed.action == 'EXITWITHKEY':
+        record['fields']['exit_key'] = parsed.data2
+        record['fields']['exit_position'] = int(parsed.data2)
+        record['fields']['enter_position'] = int(parsed.data3)
+        record['fields']['wait_time'] = int(parsed.data4)
+    elif parsed.action == 'EXITWITHTIMEOUT':
+        record['fields']['exit_position'] = int(parsed.data1)
+        record['fields']['enter_position'] = int(parsed.data2)
+        record['fields']['wait_time'] = int(parsed.data3)
+    elif parsed.action == 'PAUSE':
+        pass
+    elif parsed.action == 'PAUSEALL':
+        pass
+    elif parsed.action == 'UNPAUSE':
+        pass
+    elif parsed.action == 'UNPAUSEALL':
+        pass
+    elif parsed.action == 'PENALTY':
+        pass
+    elif parsed.action == 'REMOVEMEMBER':
+        pass
+    elif parsed.action == 'RINGNOANSWER':
+        pass
+    elif parsed.action == 'TRANSFER':
+        record['fields']['transfer_extension'] = parsed.data1
+        record['fields']['wait_time'] = int(parsed.data2)
+        record['fields']['call_length'] = int(parsed.data3)
+        record['fields']['enter_position'] = int(parsed.data4)
+    elif parsed.action ==  'SYSCOMPAT':
+        pass
 
     return record
 
