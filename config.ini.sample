@@ -1,4 +1,9 @@
+[general]
+queue_log = /var/log/asterisk/queue_log
+
 [influxdb]
 database = asterisk 
 host = localhost
 port = 8086
+#user = user
+#password = password
