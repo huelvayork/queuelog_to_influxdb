@@ -1,0 +1,4 @@
+[influxdb]
+database = asterisk 
+host = localhost
+port = 8086
