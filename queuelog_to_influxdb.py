@@ -22,10 +22,10 @@ class QueueLogLine:
 
 def parse_args():
 	parser = argparse.ArgumentParser(description='Monitor Asterisk queue_log and send events to influxdb.')
-	parser.add_argument('--config', dest='config_file', action='store',
+	parser.add_argument('--config', '-c', dest='config_file', action='store',
 						default='config.ini',
 						help='config file name (default: config.ini)')
-	parser.add_argument('--file', dest='log_file', action='store',
+	parser.add_argument('--file', '-f', dest='log_file', action='store',
 						default=None,
 						help='log file to read from (default: /var/log/asterisk/queue_log)')
 	parser.add_argument('--one-shot', dest='one_shot', action='store_true',
