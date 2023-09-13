@@ -7,6 +7,7 @@ import configparser
 current_config = {
 	"config_file": "",
 	"one_shot": False,
+	"verbose": False,
 	"log_file": None,
 	"influx_db": "",
 	"influx_host": "",

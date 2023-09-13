@@ -30,11 +30,14 @@ def parse_args():
 						help='log file to read from (default: /var/log/asterisk/queue_log)')
 	parser.add_argument('--one-shot', dest='one_shot', action='store_true',
 						help="Just import the file and don't wait for new lines")
+	parser.add_argument('--verbose', '-v', dest='verbose', action='store_true',
+						help="Output lines as they are processed")
 	args = parser.parse_args()
 
 	_config.current_config["config_file"] = args.config_file
 	_config.current_config["log_file"] = args.log_file
 	_config.current_config["one_shot"] = args.one_shot
+	_config.current_config["verbose"] = args.verbose
 	
 def parse_line(line):
 	tokens = line.split("|")
@@ -56,14 +59,18 @@ def parse_line(line):
 	return parsed
 
 def process_line(line):
+	if _config.current_config["verbose"]:
+		print(line)
+
 	parsed = parse_line(line)
 	record = _influx.line_to_influx(parsed)
-	print(json.dumps([record]))
+	if _config.current_config["verbose"]:
+		print(json.dumps([record]))
+
 	_influx.client.write_points([record])
 
 def process_input():
 	for line in Pygtail(_config.current_config["log_file"]):
-		print(line)
 		process_line(line)
 
 if __name__ == "__main__":
