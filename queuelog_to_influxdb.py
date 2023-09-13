@@ -76,6 +76,8 @@ def process_input():
 if __name__ == "__main__":
 	parse_args()
 	_config.read_config()
+	if _config.current_config["verbose"]:
+		print (_config.current_config)
 
 	_influx.select_db()
 	while not _config.current_config["one_shot"]:
